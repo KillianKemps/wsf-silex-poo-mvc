@@ -116,6 +116,8 @@ Class UserController extends Controller
             ':name' => $name,
             ':salt' => $salt
         );
+
+        var_dump($sql);
         $this->app['sql']->prepareExec($sql, $arguments);
 
         return $this->app['twig']->render('user/register-success.twig', $this->data);

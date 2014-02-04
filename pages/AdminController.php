@@ -13,15 +13,14 @@ Class AdminController extends Controller
      */
     public function getArticle()
     {
-        $data = array();
-
-        if ($this->isLogged() === false) {
+        //Si user n'est pas admin redirection
+        if(!$this->isAdmin()) {
             return $this->app->redirect(
                 $this->app['url_generator']->generate('home')
             );
         }
 
-        return $this->app['twig']->render('admin.twig', $data);
+        return $this->app['twig']->render('admin.twig', $this->data);
     }
 
 
@@ -31,6 +30,11 @@ Class AdminController extends Controller
      */
     public function postArticle()
     {
+        if(!$this->isAdmin()) {
+            return $this->app->redirect(
+                $this->app['url_generator']->generate('home')
+            );
+        }
 
         $title = $this->app['request']->get('title');
         $article = $this->app['request']->get('article');
