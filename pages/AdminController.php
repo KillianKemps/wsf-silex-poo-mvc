@@ -43,6 +43,7 @@ Class AdminController extends Controller
 
         $title = $this->app['request']->get('title');
         $article = $this->app['request']->get('article');
+        $tags = $this->app['request']->get('tag');
 
         if (!empty($title) && !empty($article)) {
             $sql = "INSERT INTO articles (
@@ -62,6 +63,28 @@ Class AdminController extends Controller
             );
 
             $this->app['sql']->prepareExec($sql, $arguments);
+
+            $idArticle = $this->app['sql']->lastId();
+
+            foreach ($tags as $tag) {
+                $sql = "INSERT INTO articles_tags (
+                    id ,
+                    id_articles ,
+                    id_tags
+                )
+                VALUES (
+                    NULL ,
+                    :idArticle,
+                    :idTag
+                )";
+
+                $arguments = array(
+                    ':idArticle' => $idArticle,
+                    ':idTag' => $tag,
+                );
+
+                $this->app['sql']->prepareExec($sql, $arguments);
+            }
         }
 
         return $this->getArticle();

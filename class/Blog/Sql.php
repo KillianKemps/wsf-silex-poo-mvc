@@ -58,4 +58,13 @@ Class Sql
         return $statement;
     }
 
+    /**
+     * Retun pdo last inser ID
+     * @return int
+     */
+    public function lastId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+
 }
