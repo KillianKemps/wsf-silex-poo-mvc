@@ -10,18 +10,21 @@
                     <li>
                         <a href="{{ app.url_generator.generate('home') }}">Home</a>
                     </li>
+                    {% if admin == 1 %}
                     <li>
-                        <a href="{{ app.url_generator.generate('getAdmin') }}">Admin</a>
+                        <a href="{{ app.url_generator.generate('getAdminArticle') }}">Admin création article</a>
                     </li>
+                    <li>
+                        <a href="{{ app.url_generator.generate('getAdminTags') }}">Admin création tag</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
             <div>
-            {% if user is defined %}
-                {% if user %}
+            {% if user %}
                     <p>Bienvenue, {{ user.name }}</p>
-                {% else  %}
-                    <a href="{{ app.url_generator.generate('login') }}">Login</a>
-                {% endif %}
+            {% else  %}
+                <a href="{{ app.url_generator.generate('login') }}">Login</a>
             {% endif %}
             </div>
         </header>

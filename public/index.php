@@ -37,19 +37,11 @@ $app->get('/', function () use ($app) {
 })
 ->bind('home');
 
-//Création route /admin
-$app->get('/admin/articles', function () use ($app) {
-    $c = new AdminController($app);
-    return $c->getArticle();
+$app->get('/filter/{idTag}', function ($idTag) use ($app) {
+    $c = new HomeController($app);
+    return $c->getIndex($idTag);
 })
-->bind('getAdmin');
-
-//route post /admin
-$app->post('/admin/articles', function () use ($app) {
-    $c = new AdminController($app);
-    return $c->postArticle();
-})
-->bind('postAdmin');
+->bind('filterArticle');
 
 //route user login
 $app->get('/login', function () use ($app) {
@@ -78,6 +70,40 @@ $app->post('/register', function () use ($app) {
     return $c->postRegister();
 })
 ->bind('postRegister');
+
+/*********
+*
+* ADMIN
+*
+* ********/
+
+//Création route /admin
+$app->get('/admin/articles', function () use ($app) {
+    $c = new AdminController($app);
+    return $c->getArticle();
+})
+->bind('getAdminArticle');
+
+//route post /admin
+$app->post('/admin/articles', function () use ($app) {
+    $c = new AdminController($app);
+    return $c->postArticle();
+})
+->bind('postAdminArticle');
+
+//route get /admin
+$app->get('/admin/tags', function () use ($app) {
+    $c = new AdminController($app);
+    return $c->getTag();
+})
+->bind('getAdminTags');
+
+//route post /admin
+$app->post('/admin/tags', function () use ($app) {
+    $c = new AdminController($app);
+    return $c->postTag();
+})
+->bind('postAdminTags');
 
 //run app
 $app->run();

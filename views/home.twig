@@ -6,6 +6,17 @@
         {% for article in articles %}
             <article>
                 <h2>{{ article.title }}</h2>
+                <ul>
+                    {% for idTag, tag in article.tags %}
+                        {% if tag %}
+                        <li>
+                            <a href="{{ app.url_generator.generate('filterArticle', { idTag: idTag }) }}">
+                                {{tag}}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
                 <p>
                     {{ article.body }}
                 </p>

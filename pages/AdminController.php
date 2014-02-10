@@ -19,8 +19,13 @@ Class AdminController extends Controller
                 $this->app['url_generator']->generate('home')
             );
         }
+        $sql = 'SELECT *
+                FROM tags';
 
-        return $this->app['twig']->render('admin.twig', $this->data);
+        $tags = $this->app['sql']->query($sql);
+        $this->data['tags'] = $tags->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->app['twig']->render('admin/article.twig', $this->data);
     }
 
 
@@ -60,6 +65,53 @@ Class AdminController extends Controller
         }
 
         return $this->getArticle();
+    }
+
+    /**
+     * Get page create tag
+     * @return [type] [description]
+     */
+    public function getTag()
+    {
+        //Si user n'est pas admin redirection
+        if(!$this->isAdmin()) {
+            return $this->app->redirect(
+                $this->app['url_generator']->generate('home')
+            );
+        }
+
+        return $this->app['twig']->render('admin/tag.twig', $this->data);
+
+    }
+
+    public function postTag()
+    {
+        if(!$this->isAdmin()) {
+            return $this->app->redirect(
+                $this->app['url_generator']->generate('home')
+            );
+        }
+
+        $tag = $this->app['request']->get('tag');
+
+        if (!empty($tag)) {
+            $sql = "INSERT INTO tags (
+                id ,
+                name
+            )
+            VALUES (
+                NULL ,
+                :name
+            )";
+
+            $arguments = array(
+                ':name' => $tag,
+            );
+
+            $this->app['sql']->prepareExec($sql, $arguments);
+        }
+
+        return $this->getTag();
     }
 
 }

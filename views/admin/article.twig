@@ -7,6 +7,12 @@
     <label for="article">Article :</label>
     <textarea name="article" id="article"></textarea>
 
+    <select multiple>
+        {% for tag in tags %}
+            <option value="{{tag.id}}">{{tag.name}}</option>
+        {% endfor %}
+    </select>
+
     <input type="submit" />
 </form>
 {% endblock %}
