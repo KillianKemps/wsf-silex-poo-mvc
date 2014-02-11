@@ -49,9 +49,18 @@ Class UserController extends Controller
         );
         $this->app['session']->set('user', $user);
 
-        return $this->app->redirect(
-            $this->app['url_generator']->generate('home')
-        );
+        return $this->redirect('home');
+    }
+
+    /**
+     * Deco
+     * @return [type] [description]
+     */
+    public function getLogout()
+    {
+        $this->app['session']->set('user', null);
+
+        return $this->redirect('home');
     }
 
     /**
@@ -117,7 +126,6 @@ Class UserController extends Controller
             ':salt' => $salt
         );
 
-        var_dump($sql);
         $this->app['sql']->prepareExec($sql, $arguments);
 
         return $this->app['twig']->render('user/register-success.twig', $this->data);

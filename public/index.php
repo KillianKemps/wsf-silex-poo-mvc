@@ -57,6 +57,13 @@ $app->post('/login', function () use ($app) {
 })
 ->bind('postLogin');
 
+//logout
+$app->get('/logout', function () use ($app) {
+    $c = new UserController($app);
+    return $c->getLogout();
+})
+->bind('logout');
+
 //route user login
 $app->get('/register', function () use ($app) {
     $c = new UserController($app);

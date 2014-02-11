@@ -50,4 +50,48 @@ Class Article extends Model
 
         return $articlesProcessed;
     }
+
+    public function create($title, $article)
+    {
+        $sql = "INSERT INTO articles (
+                id ,
+                title ,
+                body
+            )
+            VALUES (
+                NULL ,
+                :title,
+                :body
+            )";
+
+        $arguments = array(
+            ':title' => $title,
+            ':body' => $article,
+        );
+
+        $this->sql->prepareExec($sql, $arguments);
+
+        return $this->sql->lastId();
+    }
+
+    public function addTag($idArticle, $idTag)
+    {
+        $sql = "INSERT INTO articles_tags (
+                    id ,
+                    id_articles ,
+                    id_tags
+                )
+                VALUES (
+                    NULL ,
+                    :idArticle,
+                    :idTag
+                )";
+
+        $arguments = array(
+            ':idArticle' => $idArticle,
+            ':idTag' => $idTag,
+        );
+
+        $this->sql->prepareExec($sql, $arguments);
+    }
 }

@@ -19,11 +19,9 @@ Class AdminController extends Controller
                 $this->app['url_generator']->generate('home')
             );
         }
-        $sql = 'SELECT *
-                FROM tags';
 
-        $tags = $this->app['sql']->query($sql);
-        $this->data['tags'] = $tags->fetchAll(PDO::FETCH_ASSOC);
+        $tag = new Tag($this->app);
+        $this->data['tags'] = $tag->getAll();
 
         return $this->app['twig']->render('admin/article.twig', $this->data);
     }
@@ -46,44 +44,12 @@ Class AdminController extends Controller
         $tags = $this->app['request']->get('tag');
 
         if (!empty($title) && !empty($article)) {
-            $sql = "INSERT INTO articles (
-                id ,
-                title ,
-                body
-            )
-            VALUES (
-                NULL ,
-                :title,
-                :body
-            )";
+            $art = new Article($this->app);
 
-            $arguments = array(
-                ':title' => $title,
-                ':body' => $article,
-            );
-
-            $this->app['sql']->prepareExec($sql, $arguments);
-
-            $idArticle = $this->app['sql']->lastId();
+            $idArticle = $art->create($title, $article);
 
             foreach ($tags as $tag) {
-                $sql = "INSERT INTO articles_tags (
-                    id ,
-                    id_articles ,
-                    id_tags
-                )
-                VALUES (
-                    NULL ,
-                    :idArticle,
-                    :idTag
-                )";
-
-                $arguments = array(
-                    ':idArticle' => $idArticle,
-                    ':idTag' => $tag,
-                );
-
-                $this->app['sql']->prepareExec($sql, $arguments);
+                $art->addTag($idArticle, $tag);
             }
         }
 
@@ -118,20 +84,8 @@ Class AdminController extends Controller
         $tag = $this->app['request']->get('tag');
 
         if (!empty($tag)) {
-            $sql = "INSERT INTO tags (
-                id ,
-                name
-            )
-            VALUES (
-                NULL ,
-                :name
-            )";
-
-            $arguments = array(
-                ':name' => $tag,
-            );
-
-            $this->app['sql']->prepareExec($sql, $arguments);
+            $t = new Tag($this->app);
+            $t->create($tag);
         }
 
         return $this->getTag();

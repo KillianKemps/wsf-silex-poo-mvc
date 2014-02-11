@@ -46,4 +46,11 @@ Class Controller
        //
         return $result['admin'];
     }
+
+    public function redirect($route)
+    {
+        return $this->app->redirect(
+            $this->app['url_generator']->generate($route)
+        );
+    }
 }

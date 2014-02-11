@@ -24,8 +24,10 @@
             <div>
             {% if user %}
                     <p>Bienvenue, {{ user.name }}</p>
+                    <a href="{{ app.url_generator.generate('logout') }}">Logout</a>
             {% else  %}
                 <a href="{{ app.url_generator.generate('login') }}">Login</a>
+                <a href="{{ app.url_generator.generate('register') }}">Register</a>
             {% endif %}
             </div>
         </header>
