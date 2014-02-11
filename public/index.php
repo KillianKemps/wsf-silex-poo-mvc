@@ -37,6 +37,13 @@ $app->get('/', function () use ($app) {
 })
 ->bind('home');
 
+//Création route home
+$app->get('/article/{idArticle}', function ($idArticle) use ($app) {
+    $c = new HomeController($app);
+    return $c->getArticle($idArticle);
+})
+->bind('article');
+
 $app->get('/filter/{idTag}', function ($idTag) use ($app) {
     $c = new HomeController($app);
     return $c->getIndex($idTag);

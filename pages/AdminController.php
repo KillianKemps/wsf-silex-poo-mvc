@@ -70,7 +70,6 @@ Class AdminController extends Controller
         }
 
         return $this->app['twig']->render('admin/tag.twig', $this->data);
-
     }
 
     public function postTag()

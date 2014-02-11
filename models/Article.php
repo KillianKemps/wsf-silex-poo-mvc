@@ -94,4 +94,17 @@ Class Article extends Model
 
         $this->sql->prepareExec($sql, $arguments);
     }
+
+    public function getArticle($id)
+    {
+        $sql = 'SELECT *
+                FROM articles
+                WHERE id = :id';
+        $arguments = array(
+            ':id' => $id,
+        );
+
+        $tags = $this->sql->prepareExec($sql, $arguments);
+        return $tags->fetch(PDO::FETCH_ASSOC);
+    }
 }
