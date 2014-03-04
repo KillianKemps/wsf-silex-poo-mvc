@@ -12,6 +12,9 @@ $app['debug'] = true;
 
 //load config
 require_once __DIR__.'/../config/database.php';
+require_once __DIR__.'/../config/twitter.php';
+
+$app['config-silex'] = $config;
 
 //init Database
 $app['sql'] = new Blog\Sql(

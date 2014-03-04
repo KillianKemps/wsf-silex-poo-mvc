@@ -26,20 +26,12 @@ Class HomeController extends Controller
         $tag = new Tag($this->app);
         $tags = $tag->getTagsByArticle($idArticle);
 
-        $twitter = new Twitter('WYqjWHdW9xdCNLAJEtPdEQ',
-                               'ppEZC7m0ibOGtWxKNzg9FBoUBkvMQKiGsCKFJ9UsQ' ,
-                               '75681733-AU5dmSas9YwUK0UHRRZZsvqeVHpxPTRHIWd057XFu' ,
-                               'HVGWhy6fs2yenEuyleXPce1t4RSd7OmnkCkZHEn5zSKeJ' );
+        $twitter = new Tweet($this->app);
 
         foreach ($tags as $tag) {
-            $result = $twitter->search('#'.$tag['name']);
-            $m = new MongoClient();
-            $tweets = $m->selectCollection('blog', 'tweets');
-            foreach ($result as $tweet) {
-                $tweets->insert($tweet);
-            }
+            $result = $twitter->getTweetByApi($tag['name']);
+            $twitter->saveTweet($result);
             $results[] = $result;
-
         }
 
         $this->data['tweets'] = $results;
