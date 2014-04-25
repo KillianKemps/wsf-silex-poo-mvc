@@ -27,12 +27,16 @@ Class Article extends Model
                        title,
                        body,
                        tag.id as tagId,
-                       tag.name
+                       tag.name,
+                       comment.id as commentId,
+                       comment.comment as commentContent
                    FROM articles
                    LEFT JOIN articles_tag
                    ON articles.id = articles_tag.id_articles
                    LEFT JOIN tag
                    ON articles_tag.id_tag = tag.id
+                   LEFT JOIN comment
+                   ON articles.id = comment.id_articles
                    ORDER BY articlesId';
         }
 
@@ -46,6 +50,7 @@ Class Article extends Model
             $articlesProcessed[$result['articlesId']]['title'] = $result['title'];
             $articlesProcessed[$result['articlesId']]['body'] = $result['body'];
             $articlesProcessed[$result['articlesId']]['tags'][$result['tagId']] = $result['name'];
+            $articlesProcessed[$result['articlesId']]['comments'][$result['commentId']] = $result['commentContent'];
         }
 
         return $articlesProcessed;

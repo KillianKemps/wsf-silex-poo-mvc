@@ -20,6 +20,16 @@
                 <p>
                     {{ article.body }}
                 </p>
+                Commentaires:
+                <ul>
+                    {% for comment in article.comments %}
+                        {% if comment %}
+                        <li>
+                                {{comment}}
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </article>
         {% endfor %}
     </section>
