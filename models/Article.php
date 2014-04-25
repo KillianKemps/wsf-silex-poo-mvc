@@ -8,32 +8,32 @@ Class Article extends Model
     {
         if ($idTag) {
             $sql = 'SELECT
-                    a.id as idArticle,
-                    a.title,
-                    a.body,
-                    t.id as idTags,
-                    t.name
-                FROM  articles a
-                LEFT JOIN articles_tags at
-                ON a.id = at.id_articles
-                LEFT JOIN tags t
-                ON at.id_tags = t.id
-                WHERE t.id = '.(int)$idTag.'
-                ORDER BY idArticle';
+                       articles.id as articlesId,
+                       title,
+                       body,
+                       tag.id as tagId,
+                       tag.name
+                   FROM articles
+                   LEFT JOIN articles_tag
+                   ON articles.id = articles_tag.id_articles
+                   LEFT JOIN tag
+                   ON articles_tag.id_tag = tag.id
+                   WHERE tag.id = '.(int)$idTag.'
+                   ORDER BY articlesId';
         }
         else {
             $sql = 'SELECT
-                    a.id as idArticle,
-                    a.title,
-                    a.body,
-                    t.id as idTags,
-                    t.name
-                FROM  articles a
-                LEFT JOIN articles_tags at
-                ON a.id = at.id_articles
-                LEFT JOIN tags t
-                ON at.id_tags = t.id
-                ORDER BY idArticle';
+                       articles.id as articlesId,
+                       title,
+                       body,
+                       tag.id as tagId,
+                       tag.name
+                   FROM articles
+                   LEFT JOIN articles_tag
+                   ON articles.id = articles_tag.id_articles
+                   LEFT JOIN tag
+                   ON articles_tag.id_tag = tag.id
+                   ORDER BY articlesId';
         }
 
 
@@ -43,9 +43,9 @@ Class Article extends Model
 
         $articlesProcessed = array();
         foreach ($articles as $result) {
-            $articlesProcessed[$result['idArticle']]['title'] = $result['title'];
-            $articlesProcessed[$result['idArticle']]['body'] = $result['body'];
-            $articlesProcessed[$result['idArticle']]['tags'][$result['idTags']] = $result['name'];
+            $articlesProcessed[$result['articlesId']]['title'] = $result['title'];
+            $articlesProcessed[$result['articlesId']]['body'] = $result['body'];
+            $articlesProcessed[$result['articlesId']]['tags'][$result['tagId']] = $result['name'];
         }
 
         return $articlesProcessed;
