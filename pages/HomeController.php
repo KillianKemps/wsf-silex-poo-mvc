@@ -39,4 +39,34 @@ Class HomeController extends Controller
         return $this->app['twig']->render('article.twig', $this->data);
     }
 
+    public function postComment()
+    {
+        $comment = $this->app['request']->get('comment');
+        $idArticle = $this->app['request']->get('idArticle');
+
+        $sql = "INSERT INTO  comments (
+                    id,
+                    id_articles,
+                    comment
+                )
+                VALUES (
+                    NULL,
+                    :id_articles, 
+                    :comment
+                )";
+
+        $arguments = array(
+            ':id_articles' => $idArticle,
+            ':comment' => $comment
+        );
+
+         if (!empty($comment)) {
+            $comm = new Comment($this->app);
+
+            $comm->create($comment, $idArticle);
+        }
+
+        return $this->getIndex();
+    }
+
 }

@@ -8,7 +8,7 @@ Class Tag extends Model
     public function getAll()
     {
         $sql = 'SELECT *
-                FROM tags';
+                FROM tag';
 
         $tags = $this->sql->query($sql);
         return $tags->fetchAll(PDO::FETCH_ASSOC);
@@ -17,9 +17,9 @@ Class Tag extends Model
     public function getTagsByArticle($idArticle)
     {
         $sql = 'SELECT *
-                FROM tags, articles_tags
-                WHERE tags.id = articles_tags.id_tags
-                AND articles_tags.id_tags = :id';
+                FROM tag, articles_tag
+                WHERE tag.id = articles_tag.id_tag
+                AND articles_tag.id_tag = :id';
 
         $arguments = array(
             ':id' => $idArticle,
@@ -31,7 +31,7 @@ Class Tag extends Model
 
     public function create($tag)
     {
-        $sql = "INSERT INTO tags (
+        $sql = "INSERT INTO tag (
                 id ,
                 name
             )

@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Home</h1>
     <section>
-        {% for article in articles %}
+        {% for idArticle, article in articles %}
             <article>
                 <h2>{{ article.title }}</h2>
                 <ul>
@@ -20,16 +20,26 @@
                 <p>
                     {{ article.body }}
                 </p>
+                <section>
                 Commentaires:
-                <ul>
-                    {% for comment in article.comments %}
-                        {% if comment %}
-                        <li>
-                                {{comment}}
-                        </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                    <ul>
+                        {% for comment in article.comments %}
+                            {% if comment %}
+                            <li>
+                                    {{comment}}
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    Ajouter commentaire:
+                    <form action="{{ app.url_generator.generate('home') }}" method="post">
+                        <input type='hidden' name='idArticle' value="{{ idArticle }}" /> 
+                        <textarea name="comment"></textarea>
+                        <input type="submit" value="Envoyer">
+                    </form>
+                </section>
+                
+                
             </article>
         {% endfor %}
     </section>

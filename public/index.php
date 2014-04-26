@@ -40,6 +40,12 @@ $app->get('/', function () use ($app) {
 })
 ->bind('home');
 
+$app->post('/', function () use ($app) {
+    $c = new HomeController($app);
+    return $c->postComment();
+})
+->bind('postComment');
+
 //Création route home
 $app->get('/article/{idArticle}', function ($idArticle) use ($app) {
     $c = new HomeController($app);
