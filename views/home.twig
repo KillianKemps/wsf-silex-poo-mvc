@@ -31,12 +31,14 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
+                    {% if user %}
                     Ajouter commentaire:
                     <form action="{{ app.url_generator.generate('home') }}" method="post">
                         <input type='hidden' name='idArticle' value="{{ idArticle }}" /> 
                         <textarea name="comment"></textarea>
                         <input type="submit" value="Envoyer">
                     </form>
+                    {% endif %}
                 </section>
                 
                 
