@@ -41,6 +41,12 @@ Class HomeController extends Controller
 
     public function postComment()
     {
+        if(!$this->isLogged()) {
+            return $this->app->redirect(
+                $this->app['url_generator']->generate('home')
+            );
+        }
+
         $comment = $this->app['request']->get('comment');
         $idArticle = $this->app['request']->get('idArticle');
 
