@@ -6,7 +6,7 @@
         {% for idArticle, article in articles %}
             <article>
                 <h2>{{ article.title }}</h2>
-                <ul>
+                <ul class="tags">
                     {% for idTag, tag in article.tags %}
                         {% if tag %}
                         <li>
@@ -20,9 +20,9 @@
                 <p>
                     {{ article.body }}
                 </p>
-                <section>
+                <section class="commentSection">
                 Commentaires:
-                    <ul>
+                    <ul class="comments">
                         {% for comment in article.comments %}
                             {% if comment %}
                             <li>
