@@ -56,6 +56,10 @@ article{
 	background-color: #1533AD;
 }
 
+article:nth-child(3n+3){
+	float: right;
+}
+
 section{
 	margin: 0 auto;
 	width: 1000px;
@@ -63,6 +67,7 @@ section{
 
 .tags{
 	list-style-type: none;
+	font-style: italic;
 }
 
 .tags li{
@@ -82,3 +87,14 @@ section{
 	content: ",";
 }
 
+.comments{
+	list-style-type: none;
+}
+
+.comments > li {
+    background-color:#4965D6;
+    display: block;
+    margin: 10px 0;
+    padding: 5px;
+    width: 360px;
+}
